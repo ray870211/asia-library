@@ -12,6 +12,7 @@ header{
 }
 .navbar a{
     color: white !important;
+    text-decoration: none;
 }
 .navbar .login-btn{
     background-color: #038686;
@@ -26,6 +27,7 @@ header{
 }
 .collapse a{
     color: white !important;
+    
 }
 .fas{
     color: #038686;
@@ -49,6 +51,10 @@ header{
 .video{
     max-width: 100%;
     max-height: 100%;
+}
+.canvas{
+    width: 0px;
+    height: 0px;
 }
 .card .card-btn{
     background-color: #038686;
