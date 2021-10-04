@@ -24,7 +24,7 @@ function snap() {
   if (video.getAttribute("style") != null) {
     video.removeAttribute("style");
     canvas.removeAttribute("style");
-    $("#snap").html("拍照");
+    $("#snap").html("重新拍照");
   } else {
     canvas.setAttribute(
       "style",
