@@ -30,12 +30,6 @@
               <li class="nav-item">
                 <a class="nav-link active" aria-current="page" href="#">Home</a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Features</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Pricing</a>
-              </li>
             </ul>
           </div>
           <a class="login-btn" href="./login.html">登入</a>
@@ -43,36 +37,34 @@
       </nav>
     </header>
     <div class="container-fluid mt-2">
-        <div class="row">
-           
-            <div class="col-8 m-auto">
-              <div class="card">
-                <div class="card-body">
-                  <h5 class="card-title">登入</h5>
-                  <div class="card-text table-group">
-                    <form action="./face_detection.py/reg" method="POST">
-                      <input
-                      class="form-control form-control-lg m-2 student-input"
-                      type="text"
-                      placeholder="帳號"
-                      aria-label=".form-control-lg example"
-                      name="name"
-                    />
-                    <input
-                      class="form-control form-control-lg m-2 student-input"
-                      type="password"
-                      placeholder="密碼"
-                      aria-label=".form-control-lg example"
-                      name="account_id"
-                    />
-                  </div>
-                  <button class="card-btn" id="register">登入</button>
-                </form>
-                </div>
+      <div class="row">
+        <div class="col-8 m-auto">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">登入</h5>
+              <div class="card-text table-group">
+                <input
+                  class="form-control form-control-lg m-2 student-input"
+                  type="text"
+                  placeholder="帳號"
+                  aria-label=".form-control-lg example"
+                  name="account"
+                />
+                <input
+                  class="form-control form-control-lg m-2 student-input"
+                  type="password"
+                  placeholder="密碼"
+                  aria-label=".form-control-lg example"
+                  name="password"
+                />
               </div>
+              <button class="card-btn" id="login">登入</button>
             </div>
           </div>
+        </div>
+      </div>
     </div>
+
     <script
       src="https://code.jquery.com/jquery-3.6.0.js"
       integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
@@ -83,6 +75,6 @@
       integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
       crossorigin="anonymous"
     ></script>
-    <script src="./index.js"></script>
+    <script src="./login.js"></script>
   </body>
 </html>

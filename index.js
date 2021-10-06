@@ -48,16 +48,16 @@ $("#register").click(function () {
     gender: document.getElementsByTagName("select").gender.value,
     imaData: imgData,
   };
-  sendToServer("http://10.96.26.249:5001/reg");
+  sendToServer("/api/reg");
 });
 
 function sendToServer(url) {
   $.ajax({
     type: "POST",
     url: url,
-    dataType: "jsonp",
+    dataType: "json",
     heads: {
-      "content-type": "application/x-www-form-url-lencoded",
+      "Content-type": "application/x-www-form-url-lencoded",
     },
     data: {
       name: user_data.name,
