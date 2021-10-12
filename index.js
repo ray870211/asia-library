@@ -5,6 +5,7 @@ var img = document.querySelector("img");
 var imgData = null;
 var localMediaStream = null;
 var user_data;
+var message_data;
 navigator.getUserMedia =
   navigator.getUserMedia ||
   navigator.webkitGetUserMedia ||
@@ -42,7 +43,7 @@ function snap() {
 $("#register").click(function () {
   user_data = {
     name: document.getElementsByTagName("input").name.value,
-    account_id: document.getElementsByTagName("input").account_id.value,
+    account_id: 1,
     u_id: document.getElementsByTagName("input").u_id.value,
     myclass: document.getElementsByTagName("input").myclass.value,
     gender: document.getElementsByTagName("select").gender.value,
@@ -67,8 +68,18 @@ function sendToServer(url) {
       gender: user_data.gender,
       imaData: user_data.imgData,
     },
-    success: function () {
-      print("work");
+    success: function (data) {
+      message_data = data;
+      if (message_data.data.status_code == "200") {
+        // location.href = "";
+      }
+    },
+    error: function (data) {
+      message_data = data;
+      if (message_data.responseJSON.status_code == "400") {
+        $("#alert").removeClass("d-none");
+        $("#alert").html(message_data.responseJSON.message);
+      }
     },
   });
 }
