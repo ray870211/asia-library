@@ -30,6 +30,12 @@
               <li class="nav-item">
                 <a class="nav-link active" aria-current="page" href="#">Home</a>
               </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#"></a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#"></a>
+              </li>
             </ul>
           </div>
           <a class="login-btn" href="./login.html">登入</a>
@@ -38,36 +44,69 @@
     </header>
     <div class="container-fluid mt-2">
       <div class="row">
-        <div class="col-8 m-auto">
+        <div class="col-6">
           <div class="card">
             <div class="card-body">
-              <h5 class="card-title">登入</h5>
+              <div class="card-title">
+                <h5>人臉識別</h5>
+              </div>
+              <div class="card-text video-wrap">
+                <video id="video" class="video"></video>
+                <img src="" />
+                <canvas id="canvas" class="canvas"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">學生資料</h5>
               <div class="card-text table-group">
                 <input
                   class="form-control form-control-lg m-2 student-input"
                   type="text"
-                  placeholder="帳號"
+                  placeholder="姓名"
                   aria-label=".form-control-lg example"
-                  name="account"
+                  name="name"
+                  disabled="disabled"
                 />
                 <input
                   class="form-control form-control-lg m-2 student-input"
-                  type="password"
-                  placeholder="密碼"
+                  type="text"
+                  placeholder="學號"
                   aria-label=".form-control-lg example"
-                  name="password"
+                  name="u_id"
+                  disabled="disabled"
                 />
+                <input
+                  class="form-control form-control-lg m-2 student-input"
+                  type="text"
+                  placeholder="系所"
+                  aria-label=".form-control-lg example"
+                  name="myclass"
+                  disabled="disabled"
+                />
+                <select
+                  class="form-control form-control-lg m-2 student-input"
+                  aria-label=".form-control-lg example"
+                  name="gender"
+                  style="color: #989898"
+                  disabled="disabled"
+                >
+                  <option disabled="disabled" selected="selected">性別</option>
+                  <option value="Male">男</option>
+                  <option value="Women">女</option>
+                </select>
               </div>
-              <button class="card-btn" id="login">登入</button>
-            </div>
-            <div id="alert" class="alert alert-warning d-none" role="alert">
-              This is a warning alert—check it out!
+              <div id="alert" class="alert alert-warning d-none" role="alert">
+                This is a warning alert—check it out!
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-
     <script
       src="https://code.jquery.com/jquery-3.6.0.js"
       integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
@@ -78,6 +117,6 @@
       integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
       crossorigin="anonymous"
     ></script>
-    <script src="./login.js"></script>
+    <script src="./faceIdentify.js"></script>
   </body>
 </html>

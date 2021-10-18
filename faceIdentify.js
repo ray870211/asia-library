@@ -6,8 +6,8 @@ var imgData = null;
 var localMediaStream = null;
 var user_data;
 var message_data;
-var fd = new FormData(document.forms[0]);
-var is_snap = 0;
+var response;
+var img_form_data = new FormData(document.forms[0]);
 navigator.getUserMedia =
   navigator.getUserMedia ||
   navigator.webkitGetUserMedia ||
@@ -24,55 +24,11 @@ function streamWebCam(stream) {
 function throwError(e) {
   alert(e.name);
 }
-function snap() {
-  if (video.getAttribute("style") != null) {
-    video.removeAttribute("style");
-    canvas.removeAttribute("style");
-    $("#snap").html("重新拍照");
-    is_snap = 0;
-  } else {
-    canvas.setAttribute(
-      "style",
-      "width:" + video.clientWidth + "px;height:" + video.clientHeight + "px"
-    );
-    context.drawImage(video, 0, 0, canvas.width, canvas.height);
-    imgData = dataURItoBlob(canvas.toDataURL("image/png"));
-    // video.parentNode.removeChild(video);
-    video.setAttribute("style", "display:none");
-    $("#snap").html("重新拍照");
-    $("#alert").addClass("d-none");
-    is_snap = 1;
-  }
-}
 
-$("#register").click(function () {
-  if (is_snap == 0) {
-    $("#alert").html("請先拍照");
-    $("#alert").removeClass("d-none");
-  } else {
-    user_data = {
-      name: document.getElementsByTagName("input").name.value,
-      account_id: 1,
-      u_id: document.getElementsByTagName("input").u_id.value,
-      myclass: document.getElementsByTagName("input").myclass.value,
-      gender: document.getElementsByTagName("select").gender.value,
-      image: imgData,
-    };
-    fd.append("name", user_data.name);
-    fd.append("account_id", user_data.account_id);
-    fd.append("u_id", user_data.u_id);
-    fd.append("myclass", user_data.myclass);
-    fd.append("gender", user_data.gender);
-    fd.append("image", user_data.image);
-    sendToServer("/api/reg");
-    $("#alert").addClass("d-none");
-  }
-});
-
-function sendToServer(url) {
+function sendToServer(url, form_data) {
   fetch(url, {
     method: "POST",
-    body: fd,
+    body: form_data,
   })
     .then((response) => {
       response = response;
@@ -95,11 +51,20 @@ function sendToServer(url) {
     $("#alert").removeClass("d-none");
   }
   if (response.status_code == 200) {
-    $("#alert").html(response.message);
-    $("#alert").removeClass("d-none");
+    document.getElementsByTagName("input").name.value = response.name;
+    document.getElementsByTagName("input").u_id.value = response.u_id;
+    document.getElementsByTagName("input").myclass.value = response.myclass;
+    document.getElementsByTagName("select").gender.value = response.gender;
     // sendToServer("/api/open");
   }
 }
+var interval = setInterval(function () {
+  context.drawImage(video, 0, 0, canvas.width, canvas.height);
+  imgData = canvas.toDataURL("image/png");
+  imgData = dataURItoBlob(canvas.toDataURL("image/png"));
+  img_form_data.append("image", imgData);
+  sendToServer("/api/face", img_form_data);
+}, 3000);
 
 function dataURItoBlob(dataURI) {
   // convert base64/URLEncoded data component to raw binary data held in a string
