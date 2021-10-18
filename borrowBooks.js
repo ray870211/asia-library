@@ -51,6 +51,10 @@ function sendToServer(url, form_data, method) {
     $("#alert").removeClass("d-none");
   }
   if (response.status_code == 200) {
+    document.getElementsByTagName("input").name.value = response.name;
+    document.getElementsByTagName("input").u_id.value = response.u_id;
+    document.getElementsByTagName("input").myclass.value = response.myclass;
+    document.getElementsByTagName("select").gender.value = response.gender;
     sendToServer("/api/frontDoor", "", "GET");
   }
 }
