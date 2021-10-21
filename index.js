@@ -90,14 +90,16 @@ function sendToServer(url) {
   // for (var value of fd.values()) {
   //   console.log(value);
   // }
-  if (response.status_code == 400) {
-    $("#alert").html(response.message);
-    $("#alert").removeClass("d-none");
-  }
-  if (response.status_code == 200) {
-    $("#alert").html(response.message);
-    $("#alert").removeClass("d-none");
-    // sendToServer("/api/open");
+  if (typeof response !== "undefined") {
+    if (response.status_code == 400) {
+      $("#alert").html(response.message);
+      $("#alert").removeClass("d-none");
+    }
+    if (response.status_code == 200) {
+      $("#alert").html(response.message);
+      $("#alert").removeClass("d-none");
+      // sendToServer("/api/open");
+    }
   }
 }
 

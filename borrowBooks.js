@@ -22,7 +22,7 @@ function streamWebCam(stream) {
   video.play();
 }
 function throwError(e) {
-  alert(e.name);
+  //   alert(e.name);
 }
 
 function sendToServer(url, form_data, method) {
@@ -40,22 +40,24 @@ function sendToServer(url, form_data, method) {
       console.log(jsonData);
     })
     .catch((err) => {
-      response = ree;
+      response = err;
       console.log(err);
     });
   // for (var value of fd.values()) {
   //   console.log(value);
   // }
-  if (response.status_code == 400) {
-    $("#alert").html(response.message);
-    $("#alert").removeClass("d-none");
-  }
-  if (response.status_code == 200) {
-    document.getElementsByTagName("input").name.value = response.name;
-    document.getElementsByTagName("input").u_id.value = response.u_id;
-    document.getElementsByTagName("input").myclass.value = response.myclass;
-    document.getElementsByTagName("select").gender.value = response.gender;
-    sendToServer("/api/frontDoor", "", "GET");
+  if (typeof response !== "undefined") {
+    if (response.status_code == 400) {
+      $("#alert").html(response.message);
+      $("#alert").removeClass("d-none");
+    }
+    if (response.status_code == 200) {
+      document.getElementsByTagName("input").name.value = response.name;
+      document.getElementsByTagName("input").u_id.value = response.u_id;
+      document.getElementsByTagName("input").myclass.value = response.class;
+      document.getElementsByTagName("select").gender.value = response.gender;
+      //   sendToServer("/api/frontDoor", "", "GET");
+    }
   }
 }
 var interval = setInterval(function () {
@@ -63,6 +65,8 @@ var interval = setInterval(function () {
   imgData = canvas.toDataURL("image/png");
   imgData = dataURItoBlob(canvas.toDataURL("image/png"));
   img_form_data.append("image", imgData);
+  $("#camera_status").html("監測中");
+  $("#camera_status").removeClass("d-none");
   sendToServer("/api/face", img_form_data, "POST");
 }, 3000);
 
