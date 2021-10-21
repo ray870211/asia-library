@@ -64,6 +64,7 @@ var interval = setInterval(function () {
   context.drawImage(video, 0, 0, canvas.width, canvas.height);
   imgData = canvas.toDataURL("image/png");
   imgData = dataURItoBlob(canvas.toDataURL("image/png"));
+  img_form_data.delete("image");
   img_form_data.append("image", imgData);
   $("#camera_status").html("監測中");
   $("#camera_status").removeClass("d-none");
