@@ -6,7 +6,7 @@ var imgData = null;
 var localMediaStream = null;
 var user_data;
 var message_data;
-var fd = new FormData(document.forms[0]);
+// var fd = new FormData(document.forms[0]);
 var is_snap = 0;
 navigator.getUserMedia =
   navigator.getUserMedia ||
@@ -58,6 +58,7 @@ $("#register").click(function () {
       gender: document.getElementsByTagName("select").gender.value,
       image: imgData,
     };
+    var fd = new FormData(document.forms[0]);
     fd.append("name", user_data.name);
     fd.append("account_id", user_data.account_id);
     fd.append("u_id", user_data.u_id);
