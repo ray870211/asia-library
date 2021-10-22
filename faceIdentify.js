@@ -62,6 +62,10 @@ var interval = setInterval(function () {
   context.drawImage(video, 0, 0, canvas.width, canvas.height);
   imgData = canvas.toDataURL("image/png");
   imgData = dataURItoBlob(canvas.toDataURL("image/png"));
+  img_form_data.forEach(function (val, key, fD) {
+    // here you can add filtering conditions
+    img_form_data.delete(key);
+  });
   img_form_data.append("image", imgData);
   sendToServer("/api/face", img_form_data, "POST");
   $("#camera_status").html("人臉監測中");

@@ -6,7 +6,7 @@ var imgData = null;
 var localMediaStream = null;
 var user_data;
 var message_data;
-// var fd = new FormData(document.forms[0]);
+var fd = new FormData(document.forms[0]);
 var is_snap = 0;
 navigator.getUserMedia =
   navigator.getUserMedia ||
@@ -46,6 +46,10 @@ function snap() {
 }
 
 $("#register").click(function () {
+  fd.forEach(function (val, key, fD) {
+    // here you can add filtering conditions
+    fd.delete(key);
+  });
   if (is_snap == 0) {
     $("#alert").html("請先拍照");
     $("#alert").removeClass("d-none");
@@ -58,7 +62,7 @@ $("#register").click(function () {
       gender: document.getElementsByTagName("select").gender.value,
       image: imgData,
     };
-    var fd = new FormData(document.forms[0]);
+    // var fd = new FormData(document.forms[0]);
     fd.append("name", user_data.name);
     fd.append("account_id", user_data.account_id);
     fd.append("u_id", user_data.u_id);
@@ -85,7 +89,7 @@ function sendToServer(url) {
       console.log(jsonData);
     })
     .catch((err) => {
-      response = ree;
+      response = err;
       console.log(err);
     });
   // for (var value of fd.values()) {
