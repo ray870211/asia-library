@@ -8,6 +8,7 @@ var user_data;
 var message_data;
 var fd = new FormData(document.forms[0]);
 var is_snap = 0;
+var return_data;
 navigator.getUserMedia =
   navigator.getUserMedia ||
   navigator.webkitGetUserMedia ||
@@ -35,7 +36,9 @@ function snap() {
       "style",
       "width:" + video.clientWidth + "px;height:" + video.clientHeight + "px"
     );
+
     context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
     imgData = dataURItoBlob(canvas.toDataURL("image/png"));
     // video.parentNode.removeChild(video);
     video.setAttribute("style", "display:none");
@@ -60,6 +63,7 @@ $("#register").click(function () {
       u_id: document.getElementsByTagName("input").u_id.value,
       myclass: document.getElementsByTagName("input").myclass.value,
       gender: document.getElementsByTagName("select").gender.value,
+      staff: document.getElementsByTagName("select").staff.value,
       image: imgData,
     };
     // var fd = new FormData(document.forms[0]);
@@ -68,45 +72,12 @@ $("#register").click(function () {
     fd.append("u_id", user_data.u_id);
     fd.append("myclass", user_data.myclass);
     fd.append("gender", user_data.gender);
+    fd.append("staff", user_data.staff);
     fd.append("image", user_data.image);
     sendToServer("/api/reg");
     $("#alert").addClass("d-none");
   }
 });
-
-function sendToServer(url) {
-  fetch(url, {
-    method: "POST",
-    body: fd,
-  })
-    .then((response) => {
-      response = response;
-      console.log(response);
-      return response.json();
-    })
-    .then((jsonData) => {
-      response = jsonData;
-      console.log(jsonData);
-    })
-    .catch((err) => {
-      response = err;
-      console.log(err);
-    });
-  // for (var value of fd.values()) {
-  //   console.log(value);
-  // }
-  if (typeof response !== "undefined") {
-    if (response.status_code == 400) {
-      $("#alert").html(response.message);
-      $("#alert").removeClass("d-none");
-    }
-    if (response.status_code == 200) {
-      $("#alert").html(response.message);
-      $("#alert").removeClass("d-none");
-      // sendToServer("/api/open");
-    }
-  }
-}
 
 function dataURItoBlob(dataURI) {
   // convert base64/URLEncoded data component to raw binary data held in a string
@@ -124,4 +95,46 @@ function dataURItoBlob(dataURI) {
   }
 
   return new Blob([ia], { type: mimeString });
+}
+
+function sendToServer(url) {
+  fetch(url, {
+    method: "POST",
+    body: fd,
+  })
+    .then((response) => {
+      console.log(response);
+      return response.json();
+    })
+    .then((jsonData) => {
+      $("#alert").html(jsonData.message);
+      $("#alert").removeClass("d-none");
+      if (jsonData.statue_code == 500) {
+        $("#alert").html("註冊失敗");
+        $("#alert").removeClass("d-none");
+        $("#alert").removeClass("alert-success");
+      }
+      if (jsonData.statue_code == 400) {
+        $("#alert").html(jsonData.message);
+        $("#alert").removeClass("d-none");
+        $("#alert").removeClass("alert-success");
+      }
+      if (jsonData.statue_code == 200) {
+        $("#alert").html("註冊成功");
+        $("#alert").removeClass("d-none");
+        $("#alert").removeClass("alert-danger");
+        $("#alert").addClass("alert-success");
+      } else {
+        $("#alert").html("註冊失敗");
+        $("#alert").removeClass("d-none");
+        $("#alert").removeClass("alert-success");
+      }
+      console.log(jsonData);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  // for (var value of fd.values()) {
+  //   console.log(value);
+  // }
 }

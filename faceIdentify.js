@@ -25,38 +25,48 @@ function throwError(e) {
   alert(e.name);
 }
 
-function sendToServer(url, form_data, method) {
+function sendToServer(url) {
   fetch(url, {
-    method: method,
-    body: form_data,
+    method: "POST",
+    body: img_form_data,
   })
     .then((response) => {
-      response = response;
-      console.log(response);
       return response.json();
     })
     .then((jsonData) => {
-      response = jsonData;
-      console.log(jsonData);
+      // console.log(jsonData.name);
+      if (jsonData.status_code == 200) {
+        $("#alert").html("辨識成功");
+        $("#alert").removeClass("d-none");
+        clearInterval(interval);
+        $("#camera_status").html("稍等");
+        setTimeout(function () {
+          interval = setInterval(function () {
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+            imgData = canvas.toDataURL("image/png");
+            imgData = dataURItoBlob(canvas.toDataURL("image/png"));
+            img_form_data.forEach(function (val, key, fD) {
+              // here you can add filtering conditions
+              img_form_data.delete(key);
+            });
+            img_form_data.append("image", imgData);
+            sendToServer("/api/face", img_form_data, "POST");
+            $("#camera_status").html("人臉監測中");
+            $("#camera_status").removeClass("d-none");
+          }, 3000);
+        }, 10000);
+      }
+      if (jsonData.status_code == 400) {
+        $("#alert").html(jsonData.message);
+        $("#alert").removeClass("d-none");
+      }
     })
     .catch((err) => {
-      response = ree;
       console.log(err);
     });
   // for (var value of fd.values()) {
   //   console.log(value);
   // }
-  if (typeof response !== "undefined") {
-    if (response.status_code == 400) {
-      $("#alert").html(response.message);
-      $("#alert").removeClass("d-none");
-    }
-    if (response.status_code == 200) {
-      // sendToServer("/api/frontDoor", "", "GET");
-      $("#alert").html(response.message);
-      $("#alert").removeClass("d-none");
-    }
-  }
 }
 var interval = setInterval(function () {
   context.drawImage(video, 0, 0, canvas.width, canvas.height);
@@ -71,7 +81,6 @@ var interval = setInterval(function () {
   $("#camera_status").html("人臉監測中");
   $("#camera_status").removeClass("d-none");
 }, 3000);
-
 function dataURItoBlob(dataURI) {
   // convert base64/URLEncoded data component to raw binary data held in a string
   var byteString;
