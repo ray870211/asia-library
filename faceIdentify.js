@@ -36,8 +36,10 @@ function sendToServer(url) {
     .then((jsonData) => {
       // console.log(jsonData.name);
       if (jsonData.status_code == 200) {
-        $("#alert").html("辨識成功");
         $("#alert").removeClass("d-none");
+        $("#alert").removeClass("alert-danger");
+        $("#alert").addClass("alert-success");
+        $("#alert").html("辨識成功");
         clearInterval(interval);
         $("#camera_status").html("稍等");
         setTimeout(function () {
@@ -54,9 +56,11 @@ function sendToServer(url) {
             $("#camera_status").html("人臉監測中");
             $("#camera_status").removeClass("d-none");
           }, 3000);
-        }, 10000);
+        }, 3000);
       }
       if (jsonData.status_code == 400) {
+        $("#alert").removeClass("alert-success");
+        $("#alert").addClass("alert-danger");
         $("#alert").html(jsonData.message);
         $("#alert").removeClass("d-none");
       }
@@ -78,6 +82,7 @@ var interval = setInterval(function () {
   });
   img_form_data.append("image", imgData);
   sendToServer("/api/face", img_form_data, "POST");
+
   $("#camera_status").html("人臉監測中");
   $("#camera_status").removeClass("d-none");
 }, 3000);

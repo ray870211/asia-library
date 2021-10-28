@@ -28,15 +28,15 @@ function throwError(e) {
 function snap() {
   if (video.getAttribute("style") != null) {
     video.removeAttribute("style");
-    canvas.removeAttribute("style");
-    $("#snap").html("重新拍照");
+    canvas.setAttribute("style", "width:" + "0" + "px;height:" + "0" + "px;");
+    // canvas.removeAttribute("style");
+    $("#snap").html("拍照");
     is_snap = 0;
   } else {
     canvas.setAttribute(
       "style",
-      "width:" + video.clientWidth + "px;height:" + video.clientHeight + "px"
+      "width:" + video.clientWidth + "px;height:" + video.clientHeight + "px;"
     );
-
     context.drawImage(video, 0, 0, canvas.width, canvas.height);
 
     imgData = dataURItoBlob(canvas.toDataURL("image/png"));
@@ -109,25 +109,25 @@ function sendToServer(url) {
     .then((jsonData) => {
       $("#alert").html(jsonData.message);
       $("#alert").removeClass("d-none");
-      if (jsonData.statue_code == 500) {
+      if (jsonData.status_code == 500) {
         $("#alert").html("註冊失敗");
         $("#alert").removeClass("d-none");
         $("#alert").removeClass("alert-success");
       }
-      if (jsonData.statue_code == 400) {
+      if (jsonData.status_code == 400) {
         $("#alert").html(jsonData.message);
         $("#alert").removeClass("d-none");
         $("#alert").removeClass("alert-success");
       }
-      if (jsonData.statue_code == 200) {
+      if (jsonData.status_code == 200) {
+        console.log(jsonData);
+        document
+          .getElementById("img")
+          .setAttribute("src", "data:image/png;base64," + jsonData.data.embedding);
         $("#alert").html("註冊成功");
         $("#alert").removeClass("d-none");
         $("#alert").removeClass("alert-danger");
         $("#alert").addClass("alert-success");
-      } else {
-        $("#alert").html("註冊失敗");
-        $("#alert").removeClass("d-none");
-        $("#alert").removeClass("alert-success");
       }
       console.log(jsonData);
     })
