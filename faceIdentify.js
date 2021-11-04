@@ -8,6 +8,9 @@ var user_data;
 var message_data;
 var response;
 var img_form_data = new FormData(document.forms[0]);
+// context.rotate((90 * Math.PI) / 180);
+// context.translate(-canvas.height / 2, -canvas.width);
+canvas.setAttribute("style", "width:" + "0" + "px;height:" + "0" + "px;");
 navigator.getUserMedia =
   navigator.getUserMedia ||
   navigator.webkitGetUserMedia ||
@@ -46,13 +49,15 @@ function sendToServer(url) {
           interval = setInterval(function () {
             context.drawImage(video, 0, 0, canvas.width, canvas.height);
             imgData = canvas.toDataURL("image/png");
-            imgData = dataURItoBlob(canvas.toDataURL("image/png"));
+            console.log(imgData);
+            imgData = dataURItoBlob(imgData);
             img_form_data.forEach(function (val, key, fD) {
               // here you can add filtering conditions
               img_form_data.delete(key);
             });
             img_form_data.append("image", imgData);
             sendToServer("/api/face", img_form_data, "POST");
+
             $("#camera_status").html("人臉監測中");
             $("#camera_status").removeClass("d-none");
           }, 3000);
@@ -75,7 +80,8 @@ function sendToServer(url) {
 var interval = setInterval(function () {
   context.drawImage(video, 0, 0, canvas.width, canvas.height);
   imgData = canvas.toDataURL("image/png");
-  imgData = dataURItoBlob(canvas.toDataURL("image/png"));
+  console.log(imgData);
+  imgData = dataURItoBlob(imgData);
   img_form_data.forEach(function (val, key, fD) {
     // here you can add filtering conditions
     img_form_data.delete(key);
