@@ -39,6 +39,10 @@ function sendToServer(url) {
     .then((jsonData) => {
       // console.log(jsonData.name);
       if (jsonData.status_code == 200) {
+        fetch("/api/frontDoor", {
+          method: "POST",
+          // body
+        });
         $("#alert").removeClass("d-none");
         $("#alert").removeClass("alert-danger");
         $("#alert").addClass("alert-success");

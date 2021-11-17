@@ -57,6 +57,8 @@ $("#register").click(function () {
     $("#alert").html("請先拍照");
     $("#alert").removeClass("d-none");
   } else {
+    $("#alert").html("請稍等");
+    $("#alert").removeClass("d-none");
     user_data = {
       name: document.getElementsByTagName("input").name.value,
       account_id: 1,
@@ -75,7 +77,6 @@ $("#register").click(function () {
     fd.append("staff", user_data.staff);
     fd.append("image", user_data.image);
     sendToServer("/api/reg");
-    $("#alert").addClass("d-none");
   }
 });
 
@@ -138,3 +139,4 @@ function sendToServer(url) {
   //   console.log(value);
   // }
 }
+

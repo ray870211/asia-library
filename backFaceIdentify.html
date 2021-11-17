@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>人臉辨識</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="./index.css" />
+    <link
+      rel="stylesheet"
+      href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+      integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <header>
+      <nav class="navbar navbar-expand navbar-light">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="./faceIdentify.html">亞洲大學圖書館</a>
+          <i class="fas fa-home"></i>
+          <div class="collapse navbar-collapse" id="navbarText">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="#">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="register.html">人臉註冊</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="faceIdentify.html">辨識</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="./borrowBooks.html">借書</a>
+              </li>
+            </ul>
+          </div>
+          <a class="login-btn" href="./login.html">登入</a>
+        </div>
+      </nav>
+    </header>
+    <div class="container-fluid mt-2">
+      <div class="row">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-body">
+              <div class="card-title"></div>
+              <div class="card-text video-wrap">
+                <video id="video" class="video"></video>
+                <img src="" />
+                <canvas id="canvas" class="canvas" width="640px" height="960px"></canvas>
+              </div>
+              <div id="camera_status" class="alert alert-warning" role="alert"></div>
+              <div id="alert" class="alert alert-danger d-none" role="alert"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script
+      src="https://code.jquery.com/jquery-3.6.0.js"
+      integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
+      crossorigin="anonymous"
+    ></script>
+    <script src="./backFaceIdentify.js"></script>
+  </body>
+</html>
+
