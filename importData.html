@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>借書</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="./index.css" />
+    <link
+      rel="stylesheet"
+      href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+      integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p"
+      crossorigin="anonymous"
+    />
+    <!-- DataTables v1.10.16 -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css"
+    />
+  </head>
+
+  <body>
+    <header>
+      <nav class="navbar navbar-expand navbar-light">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="./faceIdentify.html">亞洲大學圖書館後台管理系統</a>
+          <div class="collapse navbar-collapse" id="navbarText">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link" href="backstage.html">資料表</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="faceIdentify.html">匯入資料</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="./borrowBooks.html">刪除資料</a>
+              </li>
+            </ul>
+          </div>
+          <a class="login-btn" href="./login.html">登入</a>
+        </div>
+      </nav>
+    </header>
+    <div class="container-fluid mt-4">
+      <nav>
+        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+          <button
+            class="nav-link active"
+            id="nav-home-tab"
+            data-bs-toggle="tab"
+            data-bs-target="#nav-home"
+            type="button"
+            role="tab"
+            aria-controls="nav-home"
+            aria-selected="true"
+          >
+            單筆新增
+          </button>
+          <button
+            class="nav-link"
+            id="nav-profile-tab"
+            data-bs-toggle="tab"
+            data-bs-target="#nav-profile"
+            type="button"
+            role="tab"
+            aria-controls="nav-profile"
+            aria-selected="false"
+          >
+            表單匯入
+          </button>
+        </div>
+      </nav>
+      <div class="tab-content" id="nav-tabContent">
+        <div
+          class="tab-pane fade show active"
+          id="nav-home"
+          role="tabpanel"
+          aria-labelledby="nav-home-tab"
+        >
+          <div class="col-lg-12" id="import-csv">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title m-2">新增檔案</h3>
+              </div>
+              <div class="card-body">
+                <div class="card-text table-group align-items-center">
+                  <input
+                    class="form-control form-control-lg m-2 student-input"
+                    type="text"
+                    placeholder="姓名"
+                    aria-label=".form-control-lg example"
+                    name="name"
+                    disabled="disabled"
+                  />
+                  <input
+                    class="form-control form-control-lg m-2 student-input"
+                    type="text"
+                    placeholder="學號"
+                    aria-label=".form-control-lg example"
+                    name="u_id"
+                    disabled="disabled"
+                  />
+                  <input
+                    class="form-control form-control-lg m-2 student-input"
+                    type="text"
+                    placeholder="系所"
+                    aria-label=".form-control-lg example"
+                    name="myclass"
+                    disabled="disabled"
+                  />
+                  <select
+                    class="form-control form-control-lg m-2 student-input"
+                    aria-label=".form-control-lg example"
+                    name="staff"
+                    style="color: #989898"
+                    disabled="disabled"
+                  >
+                    <option disabled="disabled" selected="selected">職位</option>
+                    <option value="Male">學生</option>
+                    <option value="Women">教師</option>
+                  </select>
+                  <select
+                    class="form-control form-control-lg m-2 student-input"
+                    aria-label=".form-control-lg example"
+                    name="gender"
+                    style="color: #989898"
+                    disabled="disabled"
+                  >
+                    <option disabled="disabled" selected="selected">性別</option>
+                    <option value="Male">男</option>
+                    <option value="Women">女</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <!-- /.card -->
+          </div>
+        </div>
+        <div
+          class="tab-pane fade"
+          id="nav-profile"
+          role="tabpanel"
+          aria-labelledby="nav-profile-tab"
+        >
+          <div class="col-lg-12" id="import-csv">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title m-2">匯入檔案</h3>
+              </div>
+              <div class="card-body">
+                <div class="card-text">
+                  <div class="custom-file">
+                    <input
+                      type="file"
+                      class="custom-file-input"
+                      id="file-uploader"
+                      aria-describedby="inputGroupFileAddon01"
+                      accept=".csv"
+                    />
+                    <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                  </div>
+                </div>
+                <table id="datasets1" class="table table-bordered table-hover table- m-3">
+                  <thead id="file-thead"></thead>
+                  <tbody id="file-tbody"></tbody>
+                  <tfoot></tfoot>
+                </table>
+              </div>
+            </div>
+            <!-- /.card -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
+      crossorigin="anonymous"
+    ></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <!--引用dataTables.js-->
+    <script
+      type="text/javascript"
+      src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"
+    ></script>
+    <script src="./js/backstage.js"></script>
+    <script>
+      const fileUploader = document.getElementById("file-uploader");
+      const fileReader = new FileReader();
+      let file_title = [];
+      let items = [];
+      let file_content = [];
+      let file_name;
+      fileUploader.addEventListener("change", (e) => {
+        fileReader.readAsText(e.target.files[0]);
+      });
+      fileReader.addEventListener("load", () => {
+        var file_text = fileReader.result;
+        file_name = fileUploader.files[0].name;
+        $.ajax({
+          type: "POST",
+          url: "return_csv.php",
+          dataType: "text",
+          data: {
+            file_name: file_name,
+            file: file_text,
+          },
+          success: function (data) {},
+        });
+        getFileText(file_text);
+      });
+      function getFileText(file_text) {
+        file_text = file_text.split(/[\n]/);
+        file_title.push(file_text[0]);
+        file_title = file_title.toString().replace(/"/g, "").split(",");
+        file_title.splice(file_title.length, 1);
+        for (let i = 1; i < file_text.length; i++) {
+          items.push(file_text[i]);
+        }
+        for (let i = 0; i < items.length; i++) {
+          item = items[i].split(",");
+          file_content.push(item);
+        }
+        let data_column = [0, 1, 2, 3, 4]; //資料集的title
+        let data_quantity = 100; //資料筆數
+        let table_title = "<tr>";
+        let table_content = "<tr>";
+        for (let i = 0; i < data_column.length; i++) {
+          table_title += "<th>" + file_title[data_column[i]] + "</th>";
+        }
+        for (let i = 0; i < data_quantity; i++) {
+          for (let j = 0; j < data_column.length; j++) {
+            table_content += "<td>" + file_content[i][data_column[j]] + "</td>";
+          }
+          if (i != data_quantity - 1) {
+            table_content += "<tr>";
+          }
+        }
+        $("#file-thead").html(table_title);
+        $("#file-tbody").html(table_content);
+        $(function () {
+          $("#datasets1").DataTable({
+            paging: true,
+            lengthChange: false,
+            searching: false,
+            ordering: true,
+            info: true,
+            autoWidth: false,
+            responsive: true,
+          });
+        });
+        //預測目標option
+        let targetOption = "";
+        for (let i = 0; i < data_column.length; i++) {
+          targetOption +=
+            "<option value=" +
+            file_title[data_column[i]] +
+            ">" +
+            file_title[data_column[i]] +
+            "</option>";
+        }
+        $("#select_target").html(targetOption);
+      }
+    </script>
+  </body>
+</html>

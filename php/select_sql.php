@@ -26,3 +26,4 @@ $record_query = mysqli_query($connection, $record_sql);
 while ($item = mysqli_fetch_assoc($record_query)) {
     array_push($tables['Record'], $item);
 }
+echo json_encode($tables);
