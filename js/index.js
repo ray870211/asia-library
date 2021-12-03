@@ -104,6 +104,7 @@ function sendToServer(url) {
     body: fd,
   })
     .then((response) => {
+      console.log(response);
       return response.json();
     })
     .then((jsonData) => {
@@ -138,3 +139,4 @@ function sendToServer(url) {
   //   console.log(value);
   // }
 }
+

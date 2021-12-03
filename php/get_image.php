@@ -1,10 +1,11 @@
 <?php
 $image = '';
+ini_set('display_errors', '1');
+error_reporting(E_ALL);
 $file = "/home/aupm/Desktop/library/" . $_POST['image_url'];
-echo $file;
 
 $fp = fopen($file, 'r');
-var_dump($fp);
+
 if (file_exists($file)) {
     while (!feof($fp)) {
         $image = $image . fgetc($fp);
@@ -16,5 +17,4 @@ $base64 = chunk_split(base64_encode($image));
 $data = array(
     "image" => $base64,
 );
-
 echo json_encode($data);

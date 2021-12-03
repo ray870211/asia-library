@@ -24,3 +24,4 @@ if ($table_title == "Record") {
         echo json_encode($response_message);
     }
 }
+

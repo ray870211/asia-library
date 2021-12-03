@@ -1,5 +1,5 @@
 <?php
-include("./sql_connect.php");
+include("sql_connect.php");
 
 $items = [];
 $tables = array(
@@ -27,3 +27,4 @@ while ($item = mysqli_fetch_assoc($record_query)) {
     array_push($tables['Record'], $item);
 }
 echo json_encode($tables);
+

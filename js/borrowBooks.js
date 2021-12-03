@@ -130,3 +130,6 @@ function dataURItoBlob(dataURI) {
   return new Blob([ia], { type: mimeString });
 }
 
+function copyButton(){
+  navigator.clipboard.writeText(document.getElementsByTagName("input").u_id.value)
+}

@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>借書</title>
+    <title>人臉辨識後台管理系統</title>
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -44,7 +44,7 @@
         </div>
       </nav>
     </header>
-    <div class="container-fluid m-4">
+    <div class="container-fluid my-4">
       <!-- Modal -->
       <div
         class="modal fade"
@@ -185,6 +185,7 @@
               ></button>
             </div>
             <div class="modal-body">
+              <img class = "d-block mx-auto my-1" src="" alt="" id="employee_image" width="120px" height="120px">
               <div class="input-group input-group-sm mb-3">
                 <div class="input-group-prepend">
                   <span class="input-group-text" id="inputGroup-sizing-sm">ID</span>
@@ -213,7 +214,7 @@
               </div>
               <div class="input-group input-group-sm mb-3">
                 <div class="input-group-prepend">
-                  <span class="input-group-text" id="inputGroup-sizing-sm">Root</span>
+                  <span class="input-group-text" id="inputGroup-sizing-sm employee_root">Root</span>
                 </div>
                 <input
                   type="text"
@@ -371,6 +372,7 @@
               ></button>
             </div>
             <div class="modal-body">
+              <img class = "d-block mx-auto my-1" src="" alt="" id="record_image" width="120px" height="120px">
               <div class="input-group input-group-sm mb-3">
                 <div class="input-group-prepend">
                   <span class="input-group-text" id="inputGroup-sizing-sm">ID</span>
@@ -576,10 +578,6 @@
           >
             Record
           </button>
-          <p id="date_filter">
-            <span id="date-label-from" class="date-label">From: </span><input class="date_range_filter date" type="text" id="datepicker_from" />
-            <span id="date-label-to" class="date-label">To:<input class="date_range_filter date" type="text" id="datepicker_to" />
-        </p>
         </div>
       </nav>
       <div class="tab-content" id="nav-tabContent">
@@ -669,7 +667,10 @@
           </table>
         </div>
       </div>
+      <div id="alert" class="alert alert-warning m-auto" role="alert" style="display: none;width: 800px;"></div>
     </div>
+    
+
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
@@ -681,7 +682,8 @@
       type="text/javascript"
       src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"
     ></script>
-    <script src="/js/backstage.js"></script>
+    <script src="./js/backstage.js"></script>
     <script></script>
   </body>
 </html>
+
