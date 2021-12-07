@@ -11,7 +11,8 @@
       integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU"
       crossorigin="anonymous"
     />
-    <link rel="stylesheet" href="./index.css" />
+    <link rel="stylesheet" href="./css/backstage.css" />
+    <link rel="stylesheet" href="./css/camera_from.css" />
     <link
       rel="stylesheet"
       href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
@@ -23,25 +24,22 @@
     <header>
       <nav class="navbar navbar-expand navbar-light">
         <div class="container-fluid">
-          <a class="navbar-brand" href="./faceIdentify.html">亞洲大學圖書館</a>
-          <i class="fas fa-home"></i>
+          <a class="navbar-brand title" href="./faceIdentify.html">亞洲大學圖書館後台管理系統</a>
           <div class="collapse navbar-collapse" id="navbarText">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">Home</a>
-              </li>
               <li class="nav-item">
                 <a class="nav-link" href="register.html">人臉註冊</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="faceIdentify.html">辨識</a>
+                <a class="nav-link" href="backstage.html">總覽</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="./borrowBooks.html">借書</a>
+                <a class="nav-link" href="importData.html">匯入資料</a>
               </li>
             </ul>
+            <a class="nav-btn" href="./faceIdentify.html">前台</a>
+
           </div>
-          <a class="login-btn" href="./login.html">登入</a>
         </div>
       </nav>
     </header>
@@ -56,7 +54,7 @@
               <div class="card-text video-wrap d-flex">
                 <video id="video" class="video"></video>
                 <img src="" />
-                <canvas id="canvas" class="canvas" width="1920px" height="1080px"></canvas>
+                <canvas id="canvas" class="canvas" width="640px" height="480px"></canvas>
               </div>
               <button id="snap" onclick="snap();" class="card-btn mt-1">拍照</button>
             </div>
@@ -119,6 +117,11 @@
         </div>
       </div>
     </div>
+    <footer class="footer">
+      <div class="container d-flex justify-content-center">
+          <p>Copyright © 2021 Asia University. All rights reserved. 亞洲大學圖書館</p>
+      </div>
+  </footer>
     <script
       src="https://code.jquery.com/jquery-3.6.0.js"
       integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="

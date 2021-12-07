@@ -35,7 +35,6 @@ function editButtonClick(selectedTable, id) {
   for (let i = 0; i < Object.values(table[selectedTable][0]).length; i++) {
     document.getElementsByClassName("modal-body")[selectedTable].querySelectorAll("input")[
       i
-
     ].value = $("#" + table_title[selectedTable] + "_tbody").children()[id % 10].children[
       i
     ].textContent;
@@ -150,7 +149,7 @@ function addToTable() {
         k +
         "," +
         id_count +
-        ")'>edit</button></td>";
+        ")'>view</button></td>";
       tableContent +=
         "<td><button type='button' class='btn btn-outline-danger' onclick='deleteButtonClick(" +
         k +
@@ -217,6 +216,7 @@ function addToTable() {
       info: true,
       autoWidth: false,
       responsive: true,
+      pageLength:10,
       language: {
         sInfo: "顯示第 _START_ 至 _END_ 項結果，共 _TOTAL_ 項",
         sInfoEmpty: "顯示第 0 至 0 項結果，共 0 項",

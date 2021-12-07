@@ -1,0 +1,105 @@
+
+header{
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+.navbar{
+    background-color: #232a34;
+    /* color: white !important; */
+    padding-left: 2em;
+    padding-right: 2em;
+}
+.navbar a{
+    color: white !important;
+    text-decoration: none;
+}
+.navbar .login-btn{
+    background-color: #038686;
+    font-style: normal;
+    padding: 6px 13px;
+    font-size: 24px;
+    line-height: 28px;
+    color: #F5FFFF;
+    border-radius: 10px;
+    border: none;
+    font-size: 18px;
+}
+.wrap{
+
+ flex-direction: column;
+ min-height: 100vh;
+}
+.collapse a{
+    color: white !important;
+}
+.fas{
+    color: #038686;
+}
+
+.row{
+    display: flex;
+    padding: 10px;
+}
+.card{
+    height: 100%;
+    padding: 1em;
+}
+.card-body{
+    display: flex;
+    flex-direction: column;
+}
+.video-wrap{
+    margin: auto;
+}
+.video{
+    max-width: 100%;
+    max-height: 100%;
+    transform: rotateY(180deg);
+}
+.canvas{
+    max-width: 100%;
+    max-height: 100%;
+    transform: rotateY(180deg);
+}
+.card .card-btn{
+    background-color: #038686;
+    font-style: normal;
+    padding: 6px 13px;
+    font-size: 24px;
+    line-height: 28px;
+    color: #F5FFFF;
+    border-radius: 10px;
+    border: none;
+    width: 149px;
+    margin: auto;
+    margin-bottom: -0.5em;
+    font-size: 18px;
+}
+.card .table-group{
+    display: flex;
+    flex-direction: column;
+    padding: 2em;
+}
+.card .student-input{
+    background-color: #EDEFF2;
+    border: none;
+}
+.card .student-input::placeholder {
+    color: #989898;
+    font-size: 18px;
+}
+
+footer{
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: #232a34;
+}
+footer p{
+    color: #fff;
+    padding: 3px;
+}}
+.card .student-input::placeholder {
+    color: #989898;
+    font-size: 18px;
+  }

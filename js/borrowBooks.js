@@ -59,37 +59,6 @@ function sendToServer(url, form_data, method) {
         } else {
           document.getElementsByTagName("select").gender.selectedIndex = 1;
         }
-
-        //   sendToServer("/api/frontDoor", "", "GET");
-        $("#alert").removeClass("d-none");
-        $("#alert").removeClass("alert-danger");
-        $("#alert").addClass("alert-success");
-        $("#alert").html("辨識成功");
-        $("#alert").removeClass("d-none");
-        clearInterval(interval);
-        $("#camera_status").html("稍等");
-        setTimeout(function () {
-          document.getElementById("img").setAttribute("src", "");
-          document.getElementsByTagName("input").name.value = "";
-          document.getElementsByTagName("input").u_id.value = "";
-          document.getElementsByTagName("input").myclass.value = "";
-          document.getElementsByTagName("select").staff.selectedIndex = 0;
-          document.getElementsByTagName("select").gender.selectedIndex = 0;
-
-          interval = setInterval(function () {
-            context.drawImage(video, 0, 0, canvas.width, canvas.height);
-            imgData = canvas.toDataURL("image/png");
-            imgData = dataURItoBlob(canvas.toDataURL("image/png"));
-            img_form_data.forEach(function (val, key, fD) {
-              // here you can add filtering conditions
-              img_form_data.delete(key);
-            });
-            img_form_data.append("image", imgData);
-            $("#camera_status").html("監測中");
-            $("#camera_status").removeClass("d-none");
-            sendToServer("/api/face", img_form_data, "POST");
-          }, 3000);
-        }, 3000);
       }
     })
     .catch((err) => {

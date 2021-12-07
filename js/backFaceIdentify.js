@@ -29,71 +29,78 @@ function throwError(e) {
 }
 
 function sendToServer(url) {
+  //查看感測器
   fetch(url, {
-    method: "POST",
-    body: img_form_data,
+    method: "GET",
   })
     .then((response) => {
       return response.json();
     })
     .then((jsonData) => {
-      // console.log(jsonData.name);
-      if (jsonData.status_code == 200) {
-        fetch("/api/backDoor", {
-          method: "POST",
-          // body
+      if (jsonData.state == 1) {
+        $("#camera_status").html("辨識中");
+        //人臉辨識
+        context.drawImage(video, 0, 0, canvas.width, canvas.height);
+        imgData = canvas.toDataURL("image/png");
+        console.log(imgData);
+        imgData = dataURItoBlob(imgData);
+        img_form_data.forEach(function (val, key, fD) {
+          img_form_data.delete(key);
         });
-        $("#alert").removeClass("d-none");
-        $("#alert").removeClass("alert-danger");
-        $("#alert").addClass("alert-success");
-        $("#alert").html("辨識成功");
-        clearInterval(interval);
-        $("#camera_status").html("稍等");
-        setTimeout(function () {
-          interval = setInterval(function () {
-            context.drawImage(video, 0, 0, canvas.width, canvas.height);
-            imgData = canvas.toDataURL("image/png");
-            console.log(imgData);
-            imgData = dataURItoBlob(imgData);
-            img_form_data.forEach(function (val, key, fD) {
-              // here you can add filtering conditions
-              img_form_data.delete(key);
-            });
-            img_form_data.append("image", imgData);
-            sendToServer("/api/face", img_form_data, "POST");
-
-            $("#camera_status").html("人臉監測中");
-            $("#camera_status").removeClass("d-none");
-          }, 3000);
-        }, 3000);
-      }
-      if (jsonData.status_code == 400) {
-        $("#alert").removeClass("alert-success");
-        $("#alert").addClass("alert-danger");
-        $("#alert").html(jsonData.message);
-        $("#alert").removeClass("d-none");
+        img_form_data.append("image", imgData);
+        fetch("/api/face", {
+          method: "POST",
+          body: img_form_data
+        })
+          .then((response) => {
+            return response.json();
+          })
+          .then((jsonData) => {
+            if (jsonData.status_code == 200) {
+              //開門
+              fetch("/api/backDoor", {
+                method: "POST",
+              });
+              $("#alert").removeClass("d-none");
+              $("#alert").removeClass("alert-danger");
+              $("#alert").addClass("alert-success");
+              $("#alert").html("辨識成功");
+              clearInterval(interval);
+              $("#camera_status").html("稍等");
+              setTimeout(function () {
+                interval = setInterval(function () {
+                  sendToServer("/api/backDoor");
+                  $("#camera_status").html("請將手上至感測器前方");
+                  $("#alert").addClass("d-none");
+                }, 3000);
+              }, 3000);
+            }
+            if (jsonData.status_code == 400) {
+              $("#alert").removeClass("alert-success");
+              $("#alert").addClass("alert-danger");
+              $("#alert").html(jsonData.message);
+              $("#alert").removeClass("d-none");
+              clearInterval(interval);
+              $("#camera_status").html("稍等");
+              setTimeout(function () {
+                interval = setInterval(function () {
+                  sendToServer("/api/backDoor");
+                  $("#camera_status").html("請將手上至感測器前方");
+                  $("#camera_status").removeClass("d-none");
+                  $("#alert").addClass("d-none");
+                }, 3000);
+              }, 3000);
+            }
+          })
       }
     })
     .catch((err) => {
       console.log(err);
     });
-  // for (var value of fd.values()) {
-  //   console.log(value);
-  // }
 }
 var interval = setInterval(function () {
-  context.drawImage(video, 0, 0, canvas.width, canvas.height);
-  imgData = canvas.toDataURL("image/png");
-  console.log(imgData);
-  imgData = dataURItoBlob(imgData);
-  img_form_data.forEach(function (val, key, fD) {
-    // here you can add filtering conditions
-    img_form_data.delete(key);
-  });
-  img_form_data.append("image", imgData);
-  sendToServer("/api/face", img_form_data, "POST");
-
-  $("#camera_status").html("人臉監測中");
+  sendToServer("/api/backDoor");
+  $("#camera_status").html("請將手上至感測器前方");
   $("#camera_status").removeClass("d-none");
 }, 3000);
 function dataURItoBlob(dataURI) {

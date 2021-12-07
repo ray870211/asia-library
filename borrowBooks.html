@@ -11,7 +11,7 @@
       integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU"
       crossorigin="anonymous"
     />
-    <link rel="stylesheet" href="./index.css" />
+    <link rel="stylesheet" href="./css/index.css" />
     <link
       rel="stylesheet"
       href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
@@ -24,15 +24,9 @@
       <nav class="navbar navbar-expand navbar-light">
         <div class="container-fluid">
           <a class="navbar-brand" href="./faceIdentify.html">亞洲大學圖書館</a>
-          <i class="fas fa-home"></i>
+
           <div class="collapse navbar-collapse" id="navbarText">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">Home</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="register.html">人臉註冊</a>
-              </li>
               <li class="nav-item">
                 <a class="nav-link" href="faceIdentify.html">辨識</a>
               </li>
@@ -41,7 +35,6 @@
               </li>
             </ul>
           </div>
-          <a class="login-btn" href="./login.html">登入</a>
         </div>
       </nav>
     </header>
@@ -115,8 +108,9 @@
                   <option value="Women">女</option>
                 </select>
                 <button type="button" class="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off" onclick="copyButton()">
-                  copy
+                  複製
                 </button>
+                
               </div>
               <div id="alert" class="alert alert-danger d-none" role="alert">
                 This is a warning alert—check it out!
@@ -126,6 +120,11 @@
         </div>
       </div>
     </div>
+    <footer class="footer">
+      <div class="container d-flex justify-content-center">
+          <p>Copyright © 2021 Asia University. All rights reserved. 亞洲大學圖書館</p>
+      </div>
+  </footer>
     <script
       src="https://code.jquery.com/jquery-3.6.0.js"
       integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
