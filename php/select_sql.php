@@ -27,4 +27,4 @@ while ($item = mysqli_fetch_assoc($record_query)) {
     array_push($tables['Record'], $item);
 }
 echo json_encode($tables);
-
+mysqli_close($connection);

@@ -1,279 +1,390 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>借書</title>
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU"
-      crossorigin="anonymous"
-    />
-    <link rel="stylesheet" href="./css/backstage.css" />
-    <link rel="stylesheet" href="./css/camera_from.css" />
-    <link
-      rel="stylesheet"
-      href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
-      integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p"
-      crossorigin="anonymous"
-    />
-    <!-- DataTables v1.10.16 -->
-    <link
-      rel="stylesheet"
-      href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css"
-    />
-  </head>
 
-  <body>
-    <header>
-      <nav class="navbar navbar-expand navbar-light">
-        <div class="container-fluid">
-          <a class="navbar-brand title" href="./faceIdentify.html">亞洲大學圖書館後台管理系統</a>
-          <div class="collapse navbar-collapse" id="navbarText">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item">
-                <a class="nav-link" href="register.html">人臉註冊</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="backstage.html">總覽</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="importData.html">匯入資料</a>
-              </li>
-            </ul>
-            <a class="nav-btn" href="./faceIdentify.html">前台</a>
-          </div>
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>借書</title>
+  <style>
+    #target {
+      height: 400px;
+      width: 700px;
+      background-color: #f8f8f8;
+      margin: 200px auto;
+      overflow: hidden;
+      border-radius: 5px;
+      box-shadow: 2px 2px 5px #888;
+    }
+
+    .hover::before {
+      content: '請將excel檔案拖到這裡';
+      width: 100%;
+      height: 100%;
+      display: block;
+      text-align: center;
+      line-height: 400px;
+      font-size: 24px;
+      font-family: '微軟雅黑';
+    }
+
+    #target>table {
+      height: 250px;
+      width: 400px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      margin: 75px auto;
+    }
+
+    #target>table td {
+      text-align: center;
+      border-top: 1px solid #ccc;
+      border-left: 1px solid #ccc;
+    }
+
+    #target>table tr:first-child>td {
+      border-top: 0px solid #ccc;
+    }
+
+    #target>table tr>td:first-child {
+      border-left: 0px solid #ccc;
+    }
+  </style>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous" />
+  <link rel="stylesheet" href="./css/backstage.css" />
+  <link rel="stylesheet" href="./css/camera_from.css" />
+  <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+    integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+  <!-- DataTables v1.10.16 -->
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" />
+</head>
+
+<body>
+  <header>
+    <nav class="navbar navbar-expand navbar-light">
+      <div class="container-fluid">
+        <a class="navbar-brand title">亞洲大學圖書館後台管理系統</a>
+        <div class="collapse navbar-collapse" id="navbarText">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link" href="backstage.php">總覽</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="importData.html">匯入資料</a>
+            </li>
+          </ul>
+          <a class="nav-btn" href="./borrowBooks.html">前台</a>
         </div>
-      </nav>
-    </header>
-    <div class="container-fluid mt-4">
-      <nav>
-        <div class="nav nav-tabs" id="nav-tab" role="tablist">
-          <button
-            class="nav-link active"
-            id="nav-home-tab"
-            data-bs-toggle="tab"
-            data-bs-target="#nav-home"
-            type="button"
-            role="tab"
-            aria-controls="nav-home"
-            aria-selected="true"
-          >
-            單筆新增
-          </button>
-          <button
-            class="nav-link"
-            id="nav-profile-tab"
-            data-bs-toggle="tab"
-            data-bs-target="#nav-profile"
-            type="button"
-            role="tab"
-            aria-controls="nav-profile"
-            aria-selected="false"
-          >
-            表單匯入
-          </button>
-        </div>
-      </nav>
-      <div class="tab-content" id="nav-tabContent">
-        <div
-          class="tab-pane fade show active"
-          id="nav-home"
-          role="tabpanel"
-          aria-labelledby="nav-home-tab"
-        >
-          <div class="col-lg-12" id="import-csv">
-            <div class="card">
-              <div class="card-header">
-                <h3 class="card-title m-2">新增檔案</h3>
+      </div>
+    </nav>
+  </header>
+  <div class="container-fluid mt-4">
+    <nav>
+      <div class="nav nav-tabs" id="nav-tab" role="tablist">
+        <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button"
+          role="tab" aria-controls="nav-home" aria-selected="true">
+          單筆新增
+        </button>
+        <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button"
+          role="tab" aria-controls="nav-profile" aria-selected="false">
+          表單匯入
+        </button>
+      </div>
+    </nav>
+    <div class="tab-content" id="nav-tabContent">
+      <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+        <div class="col-lg-12" id="import-csv">
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title m-2">新增檔案</h3>
+            </div>
+            <div class="card-body">
+              <div class="card-text table-group align-items-center">
+                <img id="img" alt="" style="width: 200px; height: 200px; border: black" />
+                <input data-target="image-uploader" accept="image/*" multiple="multiple" class="form-control m-2"
+                  type="file" id="image-uploader" />
+                <input class="form-control form-control-lg m-2 student-input" type="text" placeholder="姓名"
+                  aria-label=".form-control-lg example" name="name" />
+                <input class="form-control form-control-lg m-2 student-input" type="text" placeholder="學號"
+                  aria-label=".form-control-lg example" name="u_id" />
+                <input class="form-control form-control-lg m-2 student-input" type="text" placeholder="系所"
+                  aria-label=".form-control-lg example" name="myclass" />
+                <select class="form-control form-control-lg m-2 student-input" aria-label=".form-control-lg example"
+                  name="staff" style="color: #989898">
+                  <option disabled="disabled" selected="selected">職位</option>
+                  <option value="student">學生</option>
+                  <option value="teacher">職員</option>
+                </select>
+                <select class="form-control form-control-lg m-2 student-input" aria-label=".form-control-lg example"
+                  name="gender" style="color: #989898">
+                  <option selected="selected">性別</option>
+                  <option value="M">男</option>
+                  <option value="W">女</option>
+                </select>
               </div>
-              <div class="card-body">
-                <div class="card-text table-group align-items-center">
-                  <input
-                    class="form-control form-control-lg m-2 student-input"
-                    type="text"
-                    placeholder="姓名"
-                    aria-label=".form-control-lg example"
-                    name="name"
-                    
-                  />
-                  <input
-                    class="form-control form-control-lg m-2 student-input"
-                    type="text"
-                    placeholder="學號"
-                    aria-label=".form-control-lg example"
-                    name="u_id"
-                    
-                  />
-                  <input
-                    class="form-control form-control-lg m-2 student-input"
-                    type="text"
-                    placeholder="系所"
-                    aria-label=".form-control-lg example"
-                    name="myclass"
-                    
-                  />
-                  <select
-                    class="form-control form-control-lg m-2 student-input"
-                    aria-label=".form-control-lg example"
-                    name="staff"
-                    style="color: #989898"
-                    
-                  >
-                    <option disabled="disabled" selected="selected">職位</option>
-                    <option value="Male">學生</option>
-                    <option value="Women">教師</option>
-                  </select>
-                  <select
-                    class="form-control form-control-lg m-2 student-input"
-                    aria-label=".form-control-lg example"
-                    name="gender"
-                    style="color: #989898"
-                    
-                  >
-                    <option  selected="selected">性別</option>
-                    <option value="Male">男</option>
-                    <option value="Women">女</option>
-                  </select>
-                </div>
-                <button class="card-btn" id="inser_data">新增資料</button>
+              <button class="card-btn" id="register">新增資料</button>
+              <div id="alert" class="alert alert-warning m-auto m-3" role="alert" style="display: none;width: 800px;">
               </div>
             </div>
-            <!-- /.card -->
           </div>
+          <!-- /.card -->
         </div>
-        <div
-          class="tab-pane fade"
-          id="nav-profile"
-          role="tabpanel"
-          aria-labelledby="nav-profile-tab"
-        >
-          <div class="col-lg-12" id="import-csv">
-            <div class="card">
-              <div class="card-header">
-                <h3 class="card-title m-2">匯入檔案</h3>
-              </div>
-              <div class="card-body">
-                <div class="card-text">
-                  <div class="custom-file">
-                    <input
-                      type="file"
-                      class="custom-file-input"
-                      id="file-uploader"
-                      aria-describedby="inputGroupFileAddon01"
-                      accept=".csv"
-                    />
-                    <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+      </div>
+      <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+
+        <div class="col-lg-12" id="import-csv">
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title m-2">匯入檔案</h3>
+            </div>
+            <div class="card-body">
+              <div class="card-text">
+                <div class="custom-file">
+                  <div class="progress-box d-none">
+                    <div class="progress">
+                      <div class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="25"
+                        aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                    <div class="d-flex align-items-center">
+                      <strong>請稍等</strong>
+                      <div class="spinner-border ms-auto" role="status" aria-hidden="true"></div>
+                    </div>
                   </div>
+
+
+                  <div id="target" class="hover">
+
+                  </div>
+
                 </div>
-                <table id="datasets1" class="table table-bordered table-hover table- m-3">
-                  <thead id="file-thead"></thead>
-                  <tbody id="file-tbody"></tbody>
-                  <tfoot></tfoot>
-                </table>
               </div>
+
             </div>
-            <!-- /.card -->
           </div>
+
+          <!-- /.card -->
         </div>
       </div>
     </div>
-    <footer class="footer">
-      <div class="container d-flex justify-content-center">
-          <p>Copyright © 2021 Asia University. All rights reserved. 亞洲大學圖書館</p>
-      </div>
+
+  </div>
+  <footer class="footer">
+    <div class="container d-flex justify-content-center">
+      <p>Copyright © 2021 Asia University. All rights reserved. 亞洲大學圖書館</p>
+    </div>
   </footer>
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
-      crossorigin="anonymous"
-    ></script>
-    <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
-    <!--引用dataTables.js-->
-    <script
-      type="text/javascript"
-      src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"
-    ></script>
-    <script src="./js/backstage.js"></script>
-    <script>
-      const fileUploader = document.getElementById("file-uploader");
-      const fileReader = new FileReader();
-      let file_title = [];
-      let items = [];
-      let file_content = [];
-      let file_name;
-      fileUploader.addEventListener("change", (e) => {
-        fileReader.readAsText(e.target.files[0]);
-      });
-      fileReader.addEventListener("load", () => {
-        var file_text = fileReader.result;
-        file_name = fileUploader.files[0].name;
-        $.ajax({
-          type: "POST",
-          url: "return_csv.php",
-          dataType: "text",
-          data: {
-            file_name: file_name,
-            file: file_text,
-          },
-          success: function (data) {},
-        });
-        getFileText(file_text);
-      });
-      function getFileText(file_text) {
-        file_text = file_text.split(/[\n]/);
-        file_title.push(file_text[0]);
-        file_title = file_title.toString().replace(/"/g, "").split(",");
-        file_title.splice(file_title.length, 1);
-        for (let i = 1; i < file_text.length; i++) {
-          items.push(file_text[i]);
-        }
-        for (let i = 0; i < items.length; i++) {
-          item = items[i].split(",");
-          file_content.push(item);
-        }
-        let data_column = [0, 1, 2, 3, 4]; //資料集的title
-        let data_quantity = 100; //資料筆數
-        let table_title = "<tr>";
-        let table_content = "<tr>";
-        for (let i = 0; i < data_column.length; i++) {
-          table_title += "<th>" + file_title[data_column[i]] + "</th>";
-        }
-        for (let i = 0; i < data_quantity; i++) {
-          for (let j = 0; j < data_column.length; j++) {
-            table_content += "<td>" + file_content[i][data_column[j]] + "</td>";
-          }
-          if (i != data_quantity - 1) {
-            table_content += "<tr>";
-          }
-        }
-        $("#file-thead").html(table_title);
-        $("#file-tbody").html(table_content);
-        $(function () {
-          $("#datasets1").DataTable({
-            paging: true,
-            lengthChange: false,
-            searching: false,
-            ordering: true,
-            info: true,
-            autoWidth: false,
-            responsive: true,
-          });
-        });
-        //預測目標option
-        let targetOption = "";
-        for (let i = 0; i < data_column.length; i++) {
-          targetOption +=
-            "<option value=" +
-            file_title[data_column[i]] +
-            ">" +
-            file_title[data_column[i]] +
-            "</option>";
-        }
-        $("#select_target").html(targetOption);
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
+    crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
+  <!--引用dataTables.js-->
+  <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/jszip.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/xlsx.js"></script>
+
+  <script>
+    //image-uploader
+    var fd = new FormData(document.forms[0]);
+
+    const imageUploader = document.querySelector('#image-uploader');
+    const imageReader = new FileReader();
+    var user_name = []
+    var user_class = []
+    var user_id = []
+    var user_gender = []
+    var user_image = []
+    var error_array = []
+    imageUploader.addEventListener('change', (e) => {
+      base64 = imageReader.readAsDataURL(e.target.files[0]);
+      imageReader.onload = function (e) {
+        base64 = e.target.result;
+        $("#img").attr('src', base64)
+      };
+    });
+    function dataURItoBlob(base64Data) {
+      // console.log(base64Data);//data:image/png;base64,
+      var byteString;
+      if (base64Data.split(',')[0].indexOf('base64') >= 0)
+        byteString = atob(base64Data.split(',')[1]);//base64 解碼
+      else {
+        byteString = unescape(base64Data.split(',')[1]);
       }
-    </script>
-  </body>
+      var mimeString = base64Data.split(',')[0].split(':')[1].split(';')[0];//mime型別 -- image/png
+
+      // var arrayBuffer = new ArrayBuffer(byteString.length); //建立緩衝陣列
+      // var ia = new Uint8Array(arrayBuffer);//建立檢視
+      var ia = new Uint8Array(byteString.length);//建立檢視
+      for (var i = 0; i < byteString.length; i++) {
+        ia[i] = byteString.charCodeAt(i);
+      }
+      var blob = new Blob([ia], {
+        type: mimeString
+      });
+      return blob;
+    }
+    $("#register").click(function () {
+
+      if (typeof (base64) != "undefined") {
+        var imgData = dataURItoBlob(base64)
+        fd.forEach(function (val, key, fD) {
+          // here you can add filtering conditions
+          fd.delete(key);
+        });
+        callAlert("稍等")
+        user_data = {
+          name: document.getElementsByTagName("input").name.value,
+          account_id: 1,
+          u_id: document.getElementsByTagName("input").u_id.value,
+          myclass: document.getElementsByTagName("input").myclass.value,
+          gender: document.getElementsByTagName("select").gender.value,
+          staff: document.getElementsByTagName("select").staff.value,
+          image: imgData,
+        };
+        // var fd = new FormData(document.forms[0]);
+        fd.append("name", user_data.name);
+        fd.append("account_id", user_data.account_id);
+        fd.append("u_id", user_data.u_id);
+        fd.append("myclass", user_data.myclass);
+        fd.append("gender", user_data.gender);
+        fd.append("staff", user_data.staff);
+        fd.append("image", user_data.image);
+        sendToServer("/api/reg");
+      } else {
+        callAlert("未上傳註冊照片")
+      }
+
+
+    });
+    function sendToServer(url) {
+      fetch(url, {
+        method: "POST",
+        body: fd,
+      })
+        .then((response) => {
+          console.log(response);
+          return response.json();
+        })
+        .then((jsonData) => {
+          $("#alert").html(jsonData.message);
+          $("#alert").removeClass("d-none");
+          if (jsonData.status_code == 500) {
+            callAlert("註冊失敗")
+          }
+          if (jsonData.status_code == 400) {
+            callAlert(jsonData.message)
+          }
+          if (jsonData.status_code == 200) {
+            console.log(jsonData);
+            document
+              .getElementById("img")
+              .setAttribute("src", "data:image/png;base64," + jsonData.data.embedding);
+            callAlert("註冊成功")
+          }
+          console.log(jsonData);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+      // for (var value of fd.values()) {
+      //   console.log(value);
+      // }
+    }
+
+    //file-uploader
+    var json_object = []
+
+    window.addEventListener('load', function () {
+      var target = document.querySelector('#target');
+      target.addEventListener('dragenter', function () {
+        this.classList.remove('hover');
+      });
+      target.addEventListener('dragleave', function () {
+        this.classList.add('hover');
+      });
+      target.addEventListener('dragover', function (e) {
+        this.classList.remove('hover');
+        e.preventDefault();
+      });
+
+      target.addEventListener('drop', function (e) {
+        e.preventDefault();
+        console.log(e.dataTransfer.files[0])
+        handleDrop(e.dataTransfer.files[0]);
+      });
+    });
+
+    var handleDrop = function (file) {
+      var reader = new FileReader();
+
+      reader.onload = function (e) {
+        var data = e.target.result;
+        var workbook = XLSX.read(data, {
+          type: 'binary'
+        });
+        var i = 0
+        workbook.SheetNames.forEach(function (sheetName) {
+          // Here is your object
+          var XL_row_object = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
+          json_object[i] = XL_row_object;
+          i++
+          // console.log(JSON.parse(json_object[0]));
+        })
+
+      };
+
+      reader.onerror = function (ex) {
+        console.log(ex);
+      };
+
+      reader.readAsBinaryString(file);
+    }
+
+    function register() {
+      $(".progress-box").removeClass('d-none')
+      for (let i = 0; i < json_object[0].length; i++) {
+        setTimeout(function () {
+          user_name[i] = json_object[0][i]["姓名"]
+          user_class[i] = json_object[0][i]["學號"]
+          user_id[i] = json_object[0][i]["性別"]
+          user_gender[i] = json_object[0][i]["系別"]
+          getImage(i, json_object[0][i]["學號"])
+          $(".progress-bar").attr("style", "width:" + i / json_object[0].length + "%")
+        }, 10 * i)
+      }
+    }
+    function getImage(i, img_url) {
+      var img_form_data = new FormData();
+      img_form_data.append("image_url", img_url)
+      fetch("../php/get_image.php", {
+        method: "POST",
+        body: img_form_data,
+      })
+        .then((response) => {
+          return response.json();
+        })
+        .then((jsonData) => {
+          console.log(jsonData.image)
+          user_image[i] = jsonData.image
+        })
+        .catch((err) => {
+          user_image[i] = "error"
+          error_array.push = i
+        });
+    }
+
+
+    function callAlert(text) {
+      let deley = 3000
+      var alert_timeout = setTimeout(() => {
+        // $("#alert").addClass("d-none");
+        $("#alert").hide("slow");
+      }, deley);
+      $("#alert").html(text);
+      // $("#alert").removeClass("d-none");
+      $("#alert").show("slow");
+    }
+  </script>
+</body>
+
 </html>

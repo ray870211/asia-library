@@ -20,6 +20,7 @@ if(isset($_POST["account"])){
   } else{
     $GLOBALS["error_message"]="登入失敗";
   }
+  mysqli_close($connection);
 }
 ?>
 <!DOCTYPE html>

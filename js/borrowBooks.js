@@ -25,7 +25,36 @@ function streamWebCam(stream) {
 function throwError(e) {
   //   alert(e.name);
 }
-
+function snap() {
+  if (video.getAttribute("style") != null) {
+    video.removeAttribute("style");
+    canvas.setAttribute("style", "width:" + "0" + "px;height:" + "0" + "px;");
+    // canvas.removeAttribute("style");
+    $("#snap").html("拍照");
+    is_snap = 0;
+  } else {
+    canvas.setAttribute(
+      "style",
+      "width:" + video.clientWidth + "px;height:" + video.clientHeight + "px;"
+    );
+    context.drawImage(video, 0, 0, canvas.width, canvas.height);
+    imgData = dataURItoBlob(canvas.toDataURL("image/png"));
+    // video.parentNode.removeChild(video);
+    video.setAttribute("style", "display:none");
+    img_form_data.forEach(function (val, key, fD) {
+      // here you can add filtering conditions
+      img_form_data.delete(key);
+    });
+    img_form_data.append("image", imgData);
+    $("#snap").html("重新拍照");
+    is_snap = 1;
+  }
+}
+$("#identify").click(function () {
+  sendToServer("/api/book", img_form_data, "POST");
+  img_form_data.get('image')
+  callAlert("請稍等")
+})
 function sendToServer(url, form_data, method) {
   fetch(url, {
     method: method,
@@ -36,12 +65,10 @@ function sendToServer(url, form_data, method) {
     })
     .then((jsonData) => {
       if (jsonData.status_code == 400) {
-        $("#alert").removeClass("alert-success");
-        $("#alert").addClass("alert-danger");
-        $("#alert").html(jsonData.message);
-        $("#alert").removeClass("d-none");
+        callAlert(jsonData.message)
       }
       if (jsonData.status_code == 200) {
+        callAlert(jsonData.message)
         console.log(200);
         document
           .getElementById("img")
@@ -49,16 +76,29 @@ function sendToServer(url, form_data, method) {
         document.getElementsByTagName("input").name.value = jsonData.name;
         document.getElementsByTagName("input").u_id.value = jsonData.u_id;
         document.getElementsByTagName("input").myclass.value = jsonData.class;
-        if (jsonData.staff == "Male") {
+        if (jsonData.staff == "student") {
           document.getElementsByTagName("select").staff.selectedIndex = 1;
         } else {
           document.getElementsByTagName("select").staff.selectedIndex = 2;
         }
-        if (jsonData.gender == "Male") {
+        if (jsonData.gender == "M") {
           document.getElementsByTagName("select").gender.selectedIndex = 1;
         } else {
-          document.getElementsByTagName("select").gender.selectedIndex = 1;
+          document.getElementsByTagName("select").gender.selectedIndex = 2;
         }
+        setTimeout(function () {
+          document
+          .getElementById("img")
+          .setAttribute("src", "");
+        document.getElementsByTagName("input").name.value = ""
+        document.getElementsByTagName("input").u_id.value = "";
+        document.getElementsByTagName("input").myclass.value = "";
+        document.getElementsByTagName("select").staff.selectedIndex = 0;
+        document.getElementsByTagName("select").gender.selectedIndex = 0;
+        }, 5000);
+        copyContent()
+      }else{
+        callAlert("錯誤")
       }
     })
     .catch((err) => {
@@ -67,19 +107,7 @@ function sendToServer(url, form_data, method) {
       }
     });
 }
-var interval = setInterval(function () {
-  context.drawImage(video, 0, 0, canvas.width, canvas.height);
-  imgData = canvas.toDataURL("image/png");
-  imgData = dataURItoBlob(canvas.toDataURL("image/png"));
-  img_form_data.forEach(function (val, key, fD) {
-    // here you can add filtering conditions
-    img_form_data.delete(key);
-  });
-  img_form_data.append("image", imgData);
-  $("#camera_status").html("監測中");
-  $("#camera_status").removeClass("d-none");
-  sendToServer("/api/face", img_form_data, "POST");
-}, 3000);
+
 
 function dataURItoBlob(dataURI) {
   // convert base64/URLEncoded data component to raw binary data held in a string
@@ -99,6 +127,17 @@ function dataURItoBlob(dataURI) {
   return new Blob([ia], { type: mimeString });
 }
 
-function copyButton(){
+function copyContent(){
   navigator.clipboard.writeText(document.getElementsByTagName("input").u_id.value)
+}
+
+function callAlert(text){
+  let deley = 3000
+  var alert_timeout = setTimeout(() => {
+    // $("#alert").addClass("d-none");
+    $("#alert").hide("slow");
+  }, deley);
+  $("#alert").html(text);
+  // $("#alert").removeClass("d-none");
+  $("#alert").show("slow");
 }

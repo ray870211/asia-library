@@ -8,11 +8,12 @@ var user_data;
 var message_data;
 var fd = new FormData(document.forms[0]);
 var is_snap = 0;
+var studens_data;
 var return_data;
 navigator.getUserMedia =
   navigator.getUserMedia ||
   navigator.webkitGetUserMedia ||
-  navigator.mozGetUserMedia ||
+  navigator.mozGetUserMedia || 
   navigator.oGetUserMedia ||
   navigator.msGetUserMedia;
 if (navigator.getUserMedia) {
@@ -140,3 +141,38 @@ function sendToServer(url) {
   // }
 }
 
+function search_u_id(){
+  fetch("../php/search_u_id.php",{
+    method: "POST",
+  })
+    .then((response) => {
+      console.log(response);
+      return response.json();
+    })
+    .then((jsonData) => {
+      studens_data = jsonData
+    //  console.log(jsonData.studens[0])
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+}
+
+function check_btn(){
+  for(let i = 0 ;i<studens_data.studens.length;i++){
+    if(studens_data.studens[i][1]==document.getElementsByTagName("input").u_id.value){
+      
+      document.getElementsByTagName("input").name.value = studens_data.studens[i][3]
+      document.getElementsByTagName("input").u_id.value =studens_data.studens[i][1]
+      document.getElementsByTagName("input").myclass.value = studens_data.studens[i][0]
+      if(studens_data.studens[i][2]=="男"){
+        document.getElementsByTagName("select").gender.selectedIndex = 1
+      }else{
+        document.getElementsByTagName("select").gender.selectedIndex = 2
+      }
+      return
+    }
+  }
+}
+
+search_u_id()

@@ -1,5 +1,6 @@
 <?php
 include("php/sql_connect.php");
+session_set_cookie_params(0);
 session_start();
 ?>
 <!DOCTYPE html>
@@ -27,6 +28,9 @@ session_start();
       rel="stylesheet"
       href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css"
     />
+    <link href="https://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css" rel="stylesheet" type="text/css">
+    <link  rel="stylesheet"
+      href="/css/ui-datepicker.css" />
   </head>
   <?php if (isset($_SESSION['session_id'])) : ?>
   <body>
@@ -37,22 +41,20 @@ session_start();
           <div class="collapse navbar-collapse" id="navbarText">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item">
-                <a class="nav-link" href="register.html">人臉註冊</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="backstage.html">總覽</a>
+                <a class="nav-link" href="backstage.php">總覽</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="importData.html">匯入資料</a>
               </li>
             </ul>
-            <a class="nav-btn" href="./faceIdentify.html">前台</a>
+            <a class="nav-btn" href="./borrowBooks.html">前台</a>
             <a class="nav-logup-btn" href="./php/signout.php">登出</a>
           </div>
         </div>
       </nav>
     </header>
     <div class="container-fluid my-4 wrap">
+      
       <div class="table-box">
         <nav>
           <div class="nav nav-tabs" id="nav-tab" role="tablist">
@@ -596,6 +598,7 @@ session_start();
               role="tabpanel"
               aria-labelledby="nav-home-tab"
             >
+          
               <table class="account_table" id="account_table">
                 <thead>
                   <tr>
@@ -621,6 +624,17 @@ session_start();
               role="tabpanel"
               aria-labelledby="nav-profile-tab"
             >
+            <div class="form-row d-flex">
+              <div id="date_filter" class= "form-group col-3 m-2">
+                <span id="date-label-from" class="date-label">From: </span>
+                <input class="form-control date_range_filter date" type="text" id="employee_datepicker_from" />
+              </div>
+               
+                <div id="date_filter" class= "form-group col-3 m-2">
+                  <span id="date-label-to" class="date-label"></span>To:
+                  <input class="form-control date_range_filter date" type="text" id="employee_datepicker_to" />
+                </div>
+            </div>
               <table class="employee_table" id="employee_table">
                 <thead>
                   <tr>
@@ -651,6 +665,18 @@ session_start();
               role="tabpanel"
               aria-labelledby="nav-contact-tab"
             >
+            <div class="form-row d-flex">
+              <div id="date_filter" class= "form-group col-3 m-2">
+                <span id="date-label-from" class="date-label">From: </span>
+                <input class="form-control date_range_filter date" type="text" id="decord_datepicker_from" />
+              </div>
+               
+                <div id="date_filter" class= "form-group col-3 m-2">
+                  <span id="date-label-to" class="date-label"></span>To:
+                  <input class="form-control date_range_filter date" type="text" id="decord_datepicker_to" />
+                </div>
+            </div>
+          
               <table class="record_table" id="record_table">
                 <thead>
                   <tr>
@@ -692,13 +718,15 @@ session_start();
       crossorigin="anonymous"
     ></script>
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
     <!--引用dataTables.js-->
     <script
       type="text/javascript"
       src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"
     ></script>
     <script src="./js/backstage.js"></script>
-    <script></script>
   </body>
   <?php endif?>
   <?php if (empty($_SESSION['session_id'])) : ?>

@@ -81,6 +81,7 @@ function updateButtonClick() {
 
 function deleteButtonClick(selectedTable, id) {
   var form_data = new FormData();
+  var img_url = new FormData();
   form_data.append(
     "table_title",
     table_title[selectedTable].charAt(0).toUpperCase() + table_title[selectedTable].slice(1)
@@ -107,6 +108,23 @@ function deleteButtonClick(selectedTable, id) {
     .catch((err) => {
       console.log(err);
     });
+
+    img_url.append("image_url", table[selectedTable][id].root);
+    fetch("../php/delete_image.php", {
+      method: "POST",
+      body: img_url,
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((jsonData) => {
+        if (jsonData.status === 200) {
+          $("#" + table_title[selectedTable] + "_table")
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
 }
 
 function select_data() {

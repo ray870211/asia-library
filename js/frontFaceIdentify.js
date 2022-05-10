@@ -7,13 +7,12 @@ var localMediaStream = null;
 var user_data;
 var message_data;
 var response;
-var sensorDelay = 2500
+var sensorDelay = 1500;
 var img_form_data = new FormData(document.forms[0]);
-// context.rotate((90 * Math.PI) / 180);
-// context.translate(-canvas.height / 2, -canvas.width);
 canvas.setAttribute("style", "width:" + "0" + "px;height:" + "0" + "px;");
+context.strokeRect(50,50,50,50);
 navigator.getUserMedia =
-  navigator.getUserMedia ||
+  navigator.sgetUserMedia ||
   navigator.webkitGetUserMedia ||
   navigator.mozGetUserMedia ||
   navigator.oGetUserMedia ||
@@ -39,6 +38,7 @@ function sendToServer(url) {
     })
     .then((jsonData) => {
       if (jsonData.state == 1) {
+        clearInterval(interval);
         $("#camera_status").html("辨識中");
         //人臉辨識
         context.drawImage(video, 0, 0, canvas.width, canvas.height);
@@ -65,7 +65,7 @@ function sendToServer(url) {
               $("#alert").removeClass("d-none");
               $("#alert").removeClass("alert-danger");
               $("#alert").addClass("alert-success");
-              $("#alert").html("辨識成功");
+              $("#alert").html(jsonData.name.charAt(0)+"*"+jsonData.name.charAt(2)+"謝謝光臨亞洲大學圖書館");
               clearInterval(interval);
               $("#camera_status").html("稍等");
               setTimeout(function () {
@@ -92,10 +92,40 @@ function sendToServer(url) {
                 }, sensorDelay);
               }, 1500);
             }
+            if (jsonData.status_code == 500) {
+              $("#alert").removeClass("alert-success");
+              $("#alert").addClass("alert-danger");
+              $("#alert").html(jsonData.message);
+              $("#alert").removeClass("d-none");
+              clearInterval(interval);
+              $("#camera_status").html("稍等");
+              setTimeout(function () {
+                interval = setInterval(function () {
+                  sendToServer("/api/backDoor");
+                  $("#camera_status").html("請將手上至感測器前方");
+                  $("#camera_status").removeClass("d-none");
+                  $("#alert").addClass("d-none");
+                }, sensorDelay);
+              }, 1500);
+            }
           })
       }
     })
     .catch((err) => {
+      $("#alert").removeClass("alert-success");
+              $("#alert").addClass("alert-danger");
+              $("#alert").html(jsonData.message);
+              $("#alert").removeClass("d-none");
+              clearInterval(interval);
+              $("#camera_status").html("稍等");
+              setTimeout(function () {
+                interval = setInterval(function () {
+                  sendToServer("/api/frontDoor");
+                  $("#camera_status").html("請將手上至感測器前方");
+                  $("#camera_status").removeClass("d-none");
+                  $("#alert").addClass("d-none");
+                }, sensorDelay);
+              }, 1500);
       console.log(err);
     });
 }

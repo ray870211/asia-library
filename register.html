@@ -11,8 +11,8 @@
       integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU"
       crossorigin="anonymous"
     />
-    <link rel="stylesheet" href="./css/backstage.css" />
-    <link rel="stylesheet" href="./css/camera_from.css" />
+    <link rel="stylesheet" href="./css/index.css" />
+
     <link
       rel="stylesheet"
       href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
@@ -24,21 +24,17 @@
     <header>
       <nav class="navbar navbar-expand navbar-light">
         <div class="container-fluid">
-          <a class="navbar-brand title" href="./faceIdentify.html">亞洲大學圖書館後台管理系統</a>
+          <a class="navbar-brand">亞洲大學圖書館</a>
           <div class="collapse navbar-collapse" id="navbarText">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item">
-                <a class="nav-link" href="register.html">人臉註冊</a>
+                <a class="nav-link" href="./borrowBooks.html">借書</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="backstage.html">總覽</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="importData.html">匯入資料</a>
+                <a class="nav-link" href="./borrowBooks.html">註冊</a>
               </li>
             </ul>
-            <a class="nav-btn" href="./faceIdentify.html">前台</a>
-
+            <a class="nav-btn" href="./backstage.php">後台</a>
           </div>
         </div>
       </nav>
@@ -66,20 +62,22 @@
               <h5 class="card-title">學生資料</h5>
               <div class="card-text table-group align-items-center">
                 <img id="img" alt="" style="width: 200px; height: 200px; border: black" />
+                <button class="btn btn-outline-secondary mt-2" type="button" onclick="check_btn();">學號</button>
+                 <input
+                  class="form-control form-control-lg m-2 student-input"
+                  type="text"
+                  placeholder="學號"
+                  aria-label=".form-control-lg example"
+                  name="u_id"
+                >
                 <input
                   class="form-control form-control-lg m-2 student-input"
                   type="text"
                   placeholder="姓名"
                   aria-label=".form-control-lg example"
                   name="name"
-                />
-                <input
-                  class="form-control form-control-lg m-2 student-input"
-                  type="text"
-                  placeholder="學號"
-                  aria-label=".form-control-lg example"
-                  name="u_id"
-                />
+                >
+               
                 <input
                   class="form-control form-control-lg m-2 student-input"
                   type="text"
@@ -94,8 +92,8 @@
                   style="color: #989898"
                 >
                   <option disabled="disabled" selected="selected">職位</option>
-                  <option value="studen">學生</option>
-                  <option value="teacher">教師</option>
+                  <option value="student">學生</option>
+                  <option value="teacher">職員</option>
                 </select>
                 <select
                   class="form-control form-control-lg m-2 student-input"
@@ -104,8 +102,8 @@
                   style="color: #989898"
                 >
                   <option disabled="disabled" selected="selected">性別</option>
-                  <option value="Male">男</option>
-                  <option value="Women">女</option>
+                  <option value="M">男</option>
+                  <option value="W">女</option>
                 </select>
               </div>
               <button class="card-btn" id="register">註冊</button>

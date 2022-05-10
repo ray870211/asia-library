@@ -16,3 +16,4 @@ for ($i = 2; $i < count($table_keys); $i++) {
 }
 
 echo json_encode($response_message);
+mysqli_close($connection);

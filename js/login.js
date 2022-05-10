@@ -29,7 +29,7 @@ function sendToServer(url) {
       if (message_data.responseJSON.status_code == "400") {
         $("#alert").removeClass("d-none");
         $("#alert").html(message_data.responseJSON.message);
-      }
+      } 
     },
   });
 }

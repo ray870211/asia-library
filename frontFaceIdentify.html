@@ -21,21 +21,6 @@
   </head>
   <body>
     <header>
-      <nav class="navbar navbar-expand navbar-light">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="./faceIdentify.html">亞洲大學圖書館</a>
-          <div class="collapse navbar-collapse" id="navbarText">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item">
-                <a class="nav-link" href="faceIdentify.html">辨識</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="./borrowBooks.html">借書</a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </nav>
     </header>
     <div class="container-fluid mt-2">
       <div class="row">
@@ -44,12 +29,12 @@
             <div class="card-body">
               <div class="card-title"></div>
               <div class="card-text video-wrap">
-                <video id="video" class="video"></video>
+                <video id="video" class="video" style=" height: 80vh;"></video>
                 <img src="" />
                 <canvas id="canvas" class="canvas" width="480px" height="640px"></canvas>
               </div>
-              <div id="camera_status" class="alert alert-warning m-auto mt-4" role="alert" style="width: 800px;"></div>
-              <div id="alert" class="alert alert-danger d-none m-auto mt-4" role="alert" style="width: 800px;"></div>
+              <div id="camera_status" class="alert alert-warning m-auto mt-4 text-center" role="alert" style="width: 800px;"></div>
+              <div id="alert" class="alert alert-danger d-none m-auto mt-4 text-center" role="alert" style="width: 800px;"></div>
             </div>
           </div>
         </div>
