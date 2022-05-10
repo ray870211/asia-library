@@ -1,7 +1,7 @@
 var account_col = [[]];
 var employee_col = [[]];
 var record_col = [[]];
-//點擊edit 變數
+//點擊edit 
 var selected_modal;
 var selected_id;
 
@@ -26,20 +26,15 @@ function editButtonClick(selectedTable, id) {
         console.log(err);
       });
   }
-  getImage($("#" + table_title[selectedTable] + "_tbody").children()[id % 10].children[
-    2
-  ].textContent)
+  getImage(table[selectedTable][id].root)
   selected_modal = selectedTable;
   selected_id = id;
   $("#" + table_title[selectedTable] + "_modal").modal("show");
   for (let i = 0; i < Object.values(table[selectedTable][0]).length; i++) {
     document.getElementsByClassName("modal-body")[selectedTable].querySelectorAll("input")[
       i
-    ].value = $("#" + table_title[selectedTable] + "_tbody").children()[id % 10].children[
-      i
-    ].textContent;
+    ].value = Object.values(table[selectedTable][id])[i];
   }
- 
   
 }
 function updateButtonClick() {
@@ -56,11 +51,15 @@ function updateButtonClick() {
     );
 
     //改變table的值
-    $("#" + table_title[selected_modal] + "_tbody").children()[selected_id % 10].children[
-      i
-    ].textContent = document
-      .getElementsByClassName("modal-body")
-      [selected_modal].querySelectorAll("input")[i].value;
+    $("#"+table_title[selected_modal]+[Object.values(table[selected_modal][selected_id])[0]]).children()[i].textContent = document
+    .getElementsByClassName("modal-body")
+    [selected_modal].querySelectorAll("input")[i].value;
+    // console.log($("#"+table_title[selected_modal]+[Object.values(table[selected_modal][id])[0]]).children[i].textContent )
+    // $("#" + table_title[selected_modal] + "_tbody").children()[selected_id % 10].children[
+    //   i
+    // ].textContent = document
+    //   .getElementsByClassName("modal-body")
+    //   [selected_modal].querySelectorAll("input")[i].value;
   }
   modal_form_data.get("id");
   fetch("../php/update.php", {
@@ -85,7 +84,7 @@ function deleteButtonClick(selectedTable, id) {
   form_data.append(
     "table_title",
     table_title[selectedTable].charAt(0).toUpperCase() + table_title[selectedTable].slice(1)
-  );
+  ); 
   form_data.append("id", table[selectedTable][id].id);
   form_data.append("u_id", table[selectedTable][id].u_id);
   fetch("../php/delete.php", {
@@ -133,13 +132,13 @@ function addToTable() {
   table_title = ["account", "employee", "record"];
   table_name = ["account_tbody", "employee_tbody", "record_tbody"];
   table = [account_col, employee_col, record_col];
-
+  var tableContent
   for (let k = 0; k < 3; k++) {
     id_count = 0;
     //哪個table
-    var tableContent = "<tr>";
     for (let i = 0; i < table[k].length; i++) {
       //哪行資料
+      tableContent += "<tr data-id="+ Object.values(table[k][i])[0]+ " id="+table_title[k]+ Object.values(table[k][i])[0]+">";
       for (let j = 0; j < Object.keys(table[k][0]).length; j++) {
         //哪筆資料
         tableContent += "<td>" + Object.values(table[k][i])[j] + "</td>";
@@ -155,11 +154,12 @@ function addToTable() {
         k +
         "," +
         id_count +
-        ")'>delete</button></td>";
+        ")'>delete</button></td>"; 
       tableContent += "</tr>";
       id_count++;
     }
     $("#" + table_name[k]).html(tableContent);
+    tableContent = ""
   }
   function addDataTable() {
     $("#account_table").DataTable({
@@ -232,7 +232,89 @@ function addToTable() {
         },
       },
     });
+    var employee_table = $("#employee_table").DataTable({
+      "oLanguage": {
+        "sSearch": "Filter Data"
+      },
+      "iDisplayLength": -1,
+      "sPaginationType": "full_numbers",
+  
+    });
+   
+    $("#employee_datepicker_from").datepicker({
+      "onSelect": function(date) {
+        minDateFilter = new Date(date).getTime();
+        employee_table.draw();
+      }
+    }).keyup(function() {
+      minDateFilter = new Date(this.value).getTime();
+      employee_table.draw();
+    });
+  
+    $("#employee_datepicker_to").datepicker({
+      "onSelect": function(date) {
+        maxDateFilter = new Date(date).getTime();
+        employee_table.draw();
+      }
+    }).keyup(function() {
+      maxDateFilter = new Date(this.value).getTime();
+      employee_table.draw();
+    });
+    minDateFilter = "";
+    maxDateFilter = "";
+    var record_table = $("#record_table").DataTable({
+      "oLanguage": {
+        "sSearch": "Filter Data"
+      },
+      "iDisplayLength": -1,
+      "sPaginationType": "full_numbers",
+  
+    });
+  
+    $("#decord_datepicker_from").datepicker({
+      "onSelect": function(date) {
+        minDateFilter = new Date(date).getTime();
+        record_table.draw();
+      }
+    }).keyup(function() {
+      minDateFilter = new Date(this.value).getTime();
+      record_table.draw();
+    });
+  
+    $("#decord_datepicker_to").datepicker({
+      "onSelect": function(date) {
+        maxDateFilter = new Date(date).getTime();
+        record_table.draw();
+      }
+    }).keyup(function() {
+      maxDateFilter = new Date(this.value).getTime();
+      record_table.draw();
+    });
+    minDateFilter = "";
+    maxDateFilter = "";
+    
+    $.fn.dataTableExt.afnFiltering.push(
+      function(oSettings, aData, iDataIndex) {
+        if (typeof aData._date == 'undefined') {
+          aData._date = new Date(aData[8]).getTime();
+        }
+        if (minDateFilter && !isNaN(minDateFilter)) {
+          if (aData._date < minDateFilter) {
+            return false;
+          }
+        }
+    
+        if (maxDateFilter && !isNaN(maxDateFilter)) {
+          if (aData._date > maxDateFilter) {
+            return false;
+          }
+        }
+        console.log(aData._date)
+        return true;
+      }
+    );
   }
+  
   addDataTable()
 }
 
@@ -251,3 +333,5 @@ function callAlert(text){
   // $("#alert").removeClass("d-none");
   $("#alert").show("slow");
 }
+
+// Date range filter

@@ -7,10 +7,10 @@ var localMediaStream = null;
 var user_data;
 var message_data;
 var response;
+var sensorDelay = 2500;
 var img_form_data = new FormData(document.forms[0]);
-// context.rotate((90 * Math.PI) / 180);
-// context.translate(-canvas.height / 2, -canvas.width);
 canvas.setAttribute("style", "width:" + "0" + "px;height:" + "0" + "px;");
+context.strokeRect(50,50,50,50);
 navigator.getUserMedia =
   navigator.getUserMedia ||
   navigator.webkitGetUserMedia ||
@@ -72,8 +72,8 @@ function sendToServer(url) {
                   sendToServer("/api/backDoor");
                   $("#camera_status").html("請將手上至感測器前方");
                   $("#alert").addClass("d-none");
-                }, 3000);
-              }, 3000);
+                }, sensorDelay);
+              }, 1500);
             }
             if (jsonData.status_code == 400) {
               $("#alert").removeClass("alert-success");
@@ -88,8 +88,8 @@ function sendToServer(url) {
                   $("#camera_status").html("請將手上至感測器前方");
                   $("#camera_status").removeClass("d-none");
                   $("#alert").addClass("d-none");
-                }, 3000);
-              }, 3000);
+                }, sensorDelay);
+              }, 1500);
             }
           })
       }
@@ -102,7 +102,7 @@ var interval = setInterval(function () {
   sendToServer("/api/backDoor");
   $("#camera_status").html("請將手上至感測器前方");
   $("#camera_status").removeClass("d-none");
-}, 3000);
+}, sensorDelay);
 function dataURItoBlob(dataURI) {
   // convert base64/URLEncoded data component to raw binary data held in a string
   var byteString;

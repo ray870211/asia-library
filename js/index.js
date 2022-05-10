@@ -38,8 +38,8 @@ function snap() {
       "width:" + video.clientWidth + "px;height:" + video.clientHeight + "px;"
     );
     context.drawImage(video, 0, 0, canvas.width, canvas.height);
-
     imgData = dataURItoBlob(canvas.toDataURL("image/png"));
+    console.log(imgData)
     // video.parentNode.removeChild(video);
     video.setAttribute("style", "display:none");
     $("#snap").html("重新拍照");
